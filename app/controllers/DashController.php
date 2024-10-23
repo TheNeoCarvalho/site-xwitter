@@ -7,6 +7,19 @@ use Core\Database;
 
 class DashController extends Controller
 {
+
+    public function dash(){
+
+        $sql = "SELECT users.name, tweets.content FROM users INNER JOIN tweets ON users.id = tweets.id_user ORDER BY tweets.created_at DESC";
+
+        $db = Database::connect();
+
+        $stm = $db->prepare($sql);
+        $tweets = $stm->execute();
+        
+        $this->view("dash/index", ['tweets' => $tweets]);
+    }
+
     public function tweet() {
         if($_SERVER['REQUEST_METHOD'] === "POST"){
             $tweet = $_POST["tweet"];
@@ -22,6 +35,10 @@ class DashController extends Controller
             
             $this->redirect("/dash");
         }
+
+    }
+
+    public function index() {
 
     }
     

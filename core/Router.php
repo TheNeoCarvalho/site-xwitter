@@ -18,7 +18,7 @@ class Router
                 $actionName = 'tweet';
                 break;
             case '/dash':
-                $controllerName = 'App\controllers\AuthController';
+                $controllerName = 'App\controllers\DashController';
                 $actionName = 'dash';
                 break;
             case '/register':

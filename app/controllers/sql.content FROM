@@ -1,0 +1,1 @@
+"select users.name, tweets.content FROM users INNER JOIN tweets ON users.id = tweets.id_user order by tweets.created_at DESC";

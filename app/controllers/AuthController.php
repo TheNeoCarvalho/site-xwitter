@@ -7,9 +7,7 @@ use Core\Database;
 
 class AuthController extends Controller
 {
-  public function dash(){
-    $this->view("dash/index");
-  }
+
 
   public function register(){
 
