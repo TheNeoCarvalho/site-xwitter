@@ -4,33 +4,56 @@ namespace App\Controllers;
 
 use Core\Controller;
 use Core\Database;
+use Core\helpers;
 
 class DashController extends Controller
 {
 
     public function dash(){
 
-        $sql = "SELECT users.name, tweets.content FROM users INNER JOIN tweets ON users.id = tweets.id_user ORDER BY tweets.created_at DESC";
+        $sql = "SELECT 
+                users.name,
+                users.username,
+                tweets.id,
+                tweets.content,
+                tweets.created_at,
+                COUNT(likes.id) AS like_count
+            FROM 
+                tweets
+            INNER JOIN 
+                users ON tweets.user_id = users.id
+            LEFT JOIN 
+                likes ON tweets.id = likes.tweet_id
+            GROUP BY 
+                tweets.id
+            ORDER BY 
+                tweets.created_at DESC";
 
         $db = Database::connect();
 
         $stm = $db->prepare($sql);
-        $tweets = $stm->execute();
+        $stm->execute();
         
+        $tweets = $stm->fetchAll();
+
         $this->view("dash/index", ['tweets' => $tweets]);
     }
 
     public function tweet() {
         if($_SERVER['REQUEST_METHOD'] === "POST"){
-            $tweet = $_POST["tweet"];
+            session_start();
 
+            $tweet = $_POST["tweet"];
+            $user_id = $_SESSION['user_id'];
+
+            
             $db = Database::connect();
 
-            $stm = $db->prepare("INSERT INTO tweets (content, id_user) VALUES (:tweet, :id_user)");
+            $stm = $db->prepare("INSERT INTO tweets (content, user_id) VALUES (:tweet, :user_id)");
             
             $stm->bindParam(":tweet", $tweet);
-            $stm->bindParam(":id_user", $_SESSION['user_id']);
-            
+            $stm->bindParam(":user_id", $user_id);
+
             $stm->execute();
             
             $this->redirect("/dash");
@@ -38,7 +61,24 @@ class DashController extends Controller
 
     }
 
-    public function index() {
+    public function like() {
+        if($_SERVER['REQUEST_METHOD'] === "POST"){
+            session_start();
+
+            $tweet_id = intval($_POST["tweet_id"]);
+            $user_id = $_SESSION['user_id'];
+
+            $db = Database::connect();
+
+            $stm = $db->prepare("INSERT INTO likes (tweet_id, user_id) VALUES (:tweet_id, :user_id)");
+            
+            $stm->bindParam(":tweet_id", $tweet_id); 
+            $stm->bindParam(":user_id", $user_id);
+
+            $stm->execute();
+            
+            $this->redirect("/dash");
+        }
 
     }
     

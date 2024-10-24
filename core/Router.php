@@ -21,6 +21,10 @@ class Router
                 $controllerName = 'App\controllers\DashController';
                 $actionName = 'dash';
                 break;
+            case '/like':
+                $controllerName = 'App\controllers\DashController';
+                $actionName = 'like';
+                break;
             case '/register':
                 $controllerName = 'App\controllers\AuthController';
                 $actionName = 'register';

@@ -46,7 +46,7 @@
                 <h2 class="text-white text-xl font-bold">Página Inicial</h2>
             </div>
             <div class="flex space-x-4 p-4 border-b">
-                <img src="/images/avatar.png" class="w-12 h-12 rounded-full" alt="User Avatar">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/120px-User-avatar.svg.png?20201213175635" class="w-12 h-12 rounded-full" alt="User Avatar">
                 <div class="flex-1">
                     <form action="/tweet" method="POST">
                     <textarea rows="3"
@@ -61,41 +61,51 @@
                     </div>
                 </div>
             </div>
-            <div class="p-4 border-b">
-                <div class="flex items-start space-x-4">
-                    <img src="/images/avatar.png" class="w-12 h-12 rounded-full" alt="User Avatar">
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-white font-bold">John Doe</span>
-                            <span class="text-sm text-gray-500">@johndoe</span>
-                            <span class="text-sm text-gray-500">· 2h</span>
-                        </div>
-                        <p class="text-white text-white-800">Este é um exemplo de post no feed de Xwitter. É aqui que as
-                            atualizações e pensamentos rápidos são postados.</p>
-                        <div class="flex space-x-8 mt-2 text-gray-500">
-                            <button class="text-white flex items-center space-x-1 hover:text-blue-500">
-                                <span class="material-icons">chat_bubble_outline</span>
-                                <span>12</span>
-                            </button>
-                            <button class="text-white flex items-center space-x-1 hover:text-green-500">
-                                <span class="material-icons">repeat</span>
-                                <span>8</span>
-                            </button>
-                            <button class="text-white flex items-center space-x-1 hover:text-red-500">
-                                <span class="material-icons">favorite_border</span>
-                                <span>34</span>
-                            </button>
+            <?php
+          
+               foreach($tweets as $tweet){
+                echo '
+                <div class="p-4 border-b">
+                    <div class="flex items-start space-x-4">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/120px-User-avatar.svg.png?20201213175635" class="w-12 h-12 rounded-full" alt="User Avatar">
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-white font-bold">'.ucfirst($tweet['name']).'</span>
+                                <span class="text-sm text-gray-500">@'.$tweet['username'].'</span>
+                                <span class="text-sm text-gray-500">· '.timeAgo($tweet['created_at']).'</span>
+                            </div>
+                            <p class="text-white text-white-800">
+                                '.$tweet['content'].'
+                            </p>
+                            <div class="flex space-x-8 mt-2 text-gray-500">
+                                <button class="text-white flex items-center space-x-1 hover:text-blue-500">
+                                    <span class="material-icons">chat_bubble_outline</span>
+                                    <span>0</span>
+                                </button>
+                                <button class="text-white flex items-center space-x-1 hover:text-green-500">
+                                    <span class="material-icons">repeat</span>
+                                    <span>0</span>
+                                </button>
+                                <form action="/like" method="POST">
+                                <button type="submit" class="text-white flex items-center space-x-1 hover:text-red-500">
+                                    <span class="material-icons">favorite_border</span>
+                                    <span>'.$tweet['like_count'].'</span>
+                                    <input type="hidden" name="tweet_id" value="'.$tweet['id'].'">
+                                </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>';
+               }
+            ?>
         </div>
         <div class="w-1/4 p-4 hidden lg:block">
             <div class="bg-slate-900 p-4 rounded-lg shadow-md">
                 <h3 class="text-white text-lg font-bold">Quem seguir</h3>
                 <div class="space-y-4 mt-4">
                     <div class="flex items-center space-x-4">
-                        <img src="/images/avatar.png" class="w-12 h-12 rounded-full" alt="User Avatar">
+                        <img src="https://icons.veryicon.com/png/o/miscellaneous/user-avatar/user-avatar-male-5.png" class="w-12 h-12 rounded-full" alt="User Avatar">
                         <div>
                             <p class="text-white font-bold">Jane Doe</p>
                             <p class="text-gray-500 text-sm text-gray-500">@janedoe</p>
