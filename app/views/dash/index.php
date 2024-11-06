@@ -96,7 +96,6 @@
                                     <input type="hidden" name="tweet_id" value="'.$tweet['id'].'">
                                 </button>
                                 </form>
-                                <a href="/dash/test/'. $tweet['id'] .'">'. $tweet['content'] .'</a>
                             </div>
                         </div>
                     </div>

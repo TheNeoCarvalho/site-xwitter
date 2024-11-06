@@ -122,9 +122,5 @@ class DashController extends Controller
             
         }
     }
-    
-        public function test($id) {
-            echo "Mostrando o usuário com ID: " . $id;
-        }
 
 }
