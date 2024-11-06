@@ -9,8 +9,11 @@
   rel="stylesheet">
   <title>Xwitter - Home</title>
 </head>
-
 <body class="bg-slate-900 text-white">
+    
+<?php
+    session_start();
+?>
 <div class="min-h-screen flex max-w-7xl mx-auto">
         <div class="w-1/4 p-4 hidden md:block">
             <nav class="space-y-4">
@@ -103,16 +106,26 @@
         <div class="w-1/4 p-4 hidden lg:block">
             <div class="bg-slate-900 p-4 rounded-lg shadow-md">
                 <h3 class="text-white text-lg font-bold">Quem seguir</h3>
-                <div class="space-y-4 mt-4">
-                    <div class="flex items-center space-x-4">
-                        <img src="https://icons.veryicon.com/png/o/miscellaneous/user-avatar/user-avatar-male-5.png" class="w-12 h-12 rounded-full" alt="User Avatar">
-                        <div>
-                            <p class="text-white font-bold">Jane Doe</p>
-                            <p class="text-gray-500 text-sm text-gray-500">@janedoe</p>
-                            <button class="mt-1 text-sm text-blue-500">Seguir</button>
+                <?php
+                    foreach($followrs as $follow) {
+                        echo '
+                        <div class="space-y-4 mt-4">
+                            <div class="flex items-center space-x-4">
+                                <img src="https://icons.veryicon.com/png/o/miscellaneous/user-avatar/user-avatar-male-5.png" class="w-12 h-12 rounded-full" alt="User Avatar">
+                                <div>
+                                    <p class="text-white font-bold">'. ucfirst($follow['name']).'</p>
+                                    <p class="text-gray-500 text-sm text-gray-500">@'.$follow['username'].'</p>
+                                    <form action="/follow" method="POST">
+                                    <input type="hidden" name="follow_user_id" value="'.$follow['id'].'">
+                                    <button class="mt-1 text-sm text-blue-500">Seguir</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        ';
+                    }
+                    
+                    ?>
             </div>
         </div>
     </div>

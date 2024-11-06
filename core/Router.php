@@ -25,6 +25,10 @@ class Router
                 $controllerName = 'App\controllers\DashController';
                 $actionName = 'like';
                 break;
+            case '/follow':
+                $controllerName = 'App\controllers\DashController';
+                $actionName = 'follow';
+                break;
             case '/register':
                 $controllerName = 'App\controllers\AuthController';
                 $actionName = 'register';
@@ -32,6 +36,10 @@ class Router
             case '/login':
                 $controllerName = 'App\controllers\AuthController';
                 $actionName = 'login';
+                break;
+            case '/logout':
+                $controllerName = 'App\controllers\AuthController';
+                $actionName = 'logout';
                 break;
             default:
                 http_response_code(404);
