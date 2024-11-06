@@ -11,7 +11,7 @@
 <body class="bg-slate-900 flex items-center justify-center min-h-screen">
   <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
     <h2 class="text-2xl font-semibold text-center text-gray-700 mb-6">Login</h2>
-    <form action="/login" method="POST">
+    <form action="/auth/login" method="POST">
       <div class="mb-4">
         <label for="username" class="block text-sm font-medium text-gray-700">Usuário</label>
         <input type="text" id="username" name="username" required

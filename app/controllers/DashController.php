@@ -11,7 +11,7 @@ session_start();
 class DashController extends Controller
 {
 
-    public function dash(){
+    public function index() {
         $user_id = $_SESSION['user_id'];
 
         $sql = "
@@ -102,27 +102,29 @@ class DashController extends Controller
 
     }
 
-    public function follow()
-{
+    public function follow() {
 
-    if($_SERVER['REQUEST_METHOD'] === "POST"){
-        $user_id = $_SESSION['user_id'];
-        $follow_user_id = $_POST['follow_user_id'];
+        if($_SERVER['REQUEST_METHOD'] === "POST"){
+            $user_id = $_SESSION['user_id'];
+            $follow_user_id = $_POST['follow_user_id'];
 
-        $db = Database::connect();
+            $db = Database::connect();
 
-        $sql = "INSERT INTO followers (user_follow, user_following, created_at) VALUES (:user_id, :follow_user_id, NOW())";
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(':user_id', $user_id);
-        $stmt->bindParam(':follow_user_id', $follow_user_id);
-        
-        if($stmt->execute()) {
-            $this->redirect('/dash');
+            $sql = "INSERT INTO followers (user_follow, user_following, created_at) VALUES (:user_id, :follow_user_id, NOW())";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':follow_user_id', $follow_user_id);
+            
+            if($stmt->execute()) {
+                $this->redirect('/dash');
+            }
+
+            
         }
-
-        
     }
-}
     
+        public function test($id) {
+            echo "Mostrando o usuário com ID: " . $id;
+        }
 
 }

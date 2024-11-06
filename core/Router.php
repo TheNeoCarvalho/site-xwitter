@@ -6,51 +6,26 @@ class Router
 {
     public function run()
     {
-        $url = $_SERVER['REQUEST_URI'];
+        $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $url = trim($url, '/');
+        $segments = explode('/', $url);
 
-        switch ($url) {
-            case '/':
-                $controllerName = 'App\controllers\HomeController';
-                $actionName = 'index';
-                break;
-            case '/tweet':
-                $controllerName = 'App\controllers\DashController';
-                $actionName = 'tweet';
-                break;
-            case '/dash':
-                $controllerName = 'App\controllers\DashController';
-                $actionName = 'dash';
-                break;
-            case '/like':
-                $controllerName = 'App\controllers\DashController';
-                $actionName = 'like';
-                break;
-            case '/follow':
-                $controllerName = 'App\controllers\DashController';
-                $actionName = 'follow';
-                break;
-            case '/register':
-                $controllerName = 'App\controllers\AuthController';
-                $actionName = 'register';
-                break;
-            case '/login':
-                $controllerName = 'App\controllers\AuthController';
-                $actionName = 'login';
-                break;
-            case '/logout':
-                $controllerName = 'App\controllers\AuthController';
-                $actionName = 'logout';
-                break;
-            default:
-                http_response_code(404);
-                echo "Página não encontrada!";
-                exit;
-        }
+        $controllerName = isset($segments[0]) && $segments[0] !== '' 
+            ? 'App\Controllers\\' . ucfirst($segments[0]) . 'Controller' 
+            : 'App\Controllers\HomeController';
+
+        $actionName = isset($segments[1]) && $segments[1] !== '' 
+            ? $segments[1] 
+            : 'index';
 
         if (class_exists($controllerName)) {
             $controller = new $controllerName();
+
             if (method_exists($controller, $actionName)) {
-                $controller->$actionName();
+                
+                $params = array_slice($segments, 2);  
+                
+                call_user_func_array([$controller, $actionName], $params);
             } else {
                 echo "Método '$actionName' não encontrado no controller '$controllerName'!";
             }

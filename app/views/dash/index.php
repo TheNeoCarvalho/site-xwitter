@@ -37,7 +37,7 @@
                     <span class="material-icons">person</span>
                     <span>Perfil</span>
                 </a>
-                <a href="/logout"
+                <a href="/auth/logout"
                     class="flex items-center space-x-2 text-xl text-gray-200 font-bold hover:bg-gray-600 p-2 rounded-md">
                     <span class="material-icons">exit</span>
                     <span>Sair</span>
@@ -51,7 +51,7 @@
             <div class="flex space-x-4 p-4 border-b">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/120px-User-avatar.svg.png?20201213175635" class="w-12 h-12 rounded-full" alt="User Avatar">
                 <div class="flex-1">
-                    <form action="/tweet" method="POST">
+                    <form action="/dash/tweet" method="POST">
                     <textarea rows="3"
                         name="tweet"
                         class="w-full border border-gray-300 text-black rounded-lg p-2 focus:outline-none"
@@ -89,13 +89,14 @@
                                     <span class="material-icons">repeat</span>
                                     <span>0</span>
                                 </button>
-                                <form action="/like" method="POST">
+                                <form action="dash/like" method="POST">
                                 <button type="submit" class="text-white flex items-center space-x-1 hover:text-red-500">
                                     <span class="material-icons">favorite_border</span>
                                     <span>'.$tweet['like_count'].'</span>
                                     <input type="hidden" name="tweet_id" value="'.$tweet['id'].'">
                                 </button>
                                 </form>
+                                <a href="/dash/test/'. $tweet['id'] .'">'. $tweet['content'] .'</a>
                             </div>
                         </div>
                     </div>
@@ -115,7 +116,7 @@
                                 <div>
                                     <p class="text-white font-bold">'. ucfirst($follow['name']).'</p>
                                     <p class="text-gray-500 text-sm text-gray-500">@'.$follow['username'].'</p>
-                                    <form action="/follow" method="POST">
+                                    <form action="/dash/follow" method="POST">
                                     <input type="hidden" name="follow_user_id" value="'.$follow['id'].'">
                                     <button class="mt-1 text-sm text-blue-500">Seguir</button>
                                     </form>

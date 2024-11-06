@@ -8,6 +8,9 @@ use Core\Database;
 class AuthController extends Controller
 {
 
+  public function index(){
+    $this->view('auth/login');
+  }
 
   public function register(){
 
@@ -68,7 +71,7 @@ class AuthController extends Controller
   public function logout(){
     session_start();
     session_destroy();
-    $this->redirect('/login');
+    $this->redirect('/auth');
     exit;
   }
 }
