@@ -106,13 +106,11 @@ class DashController extends Controller
 {
 
     if($_SERVER['REQUEST_METHOD'] === "POST"){
-        $user_id = $_SESSION['user_id'];  // ID do usuário logado
-        $follow_user_id = $_POST['follow_user_id'];  // ID do usuário a ser seguido
+        $user_id = $_SESSION['user_id'];
+        $follow_user_id = $_POST['follow_user_id'];
 
-        // Verificar se o usuário já segue o outro
         $db = Database::connect();
 
-        // Inserir o relacionamento de seguimento
         $sql = "INSERT INTO followers (user_follow, user_following, created_at) VALUES (:user_id, :follow_user_id, NOW())";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':user_id', $user_id);
